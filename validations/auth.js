@@ -13,3 +13,10 @@ export const postCreateValidation = [
   body('tags', 'Inter the right tag of article').optional().isString(),
 body('imageUrl', 'Incorrect link of the image').optional().isString()
 ]
+
+export const loginValidator = [
+  body('email', 'Wrong Email').isEmail(),
+  body('password', 'Wrong Password').isStrongPassword(),
+  body('avatarUrl', 'Not an').optional().isURL()
+]
+

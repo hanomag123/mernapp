@@ -3,7 +3,8 @@ import * as PostController from './controllers/PostController.js'
 import multer from 'multer'
 
 import mongoose from "mongoose";
-import {postCreateValidation, registerValidator} from './validations/auth.js'
+import {loginValidator, postCreateValidation, registerValidator} from './validations/auth.js'
+import cors from 'cors'
 
 
 
@@ -33,6 +34,7 @@ const upload = multer({
 
 app.use(express.json())
 app.use('/uploads', express.static('uploads'))
+app.use(cors())
 
 app.post('/upload',checkAuth, upload.single('image'), (req, res) => {
   res.json({
@@ -40,9 +42,10 @@ app.post('/upload',checkAuth, upload.single('image'), (req, res) => {
   })
 })
 
-app.post('/auth/login', registerValidator,handkeValidationErrors, login)
+app.post('/auth/login', loginValidator ,handkeValidationErrors, login)
 
 app.post('/auth/register', registerValidator, handkeValidationErrors, register)
+app.get('/tags/getAll', PostController.getLastTags)
 app.get('/auth/me', checkAuth, getMe)
 app.get('/posts/getAll', PostController.getAll)
 app.get('/posts/:id', PostController.getOne)
