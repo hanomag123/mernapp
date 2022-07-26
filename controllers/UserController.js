@@ -81,7 +81,7 @@ export const getMe = async (req, res) => {
       })
     }
     res.json({
-      success: true
+      _id: req.userId
     })
   } catch (error) {
     
